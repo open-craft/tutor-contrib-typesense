@@ -1,0 +1,9 @@
+# Typesense
+typesense:
+  image: {{ TYPESENSE_DOCKER_IMAGE }}
+  volumes:
+    - ../../data/typesense:/typesense_data
+  environment:
+    TYPESENSE_API_KEY: "{{ TYPESENSE_BOOTSTRAP_API_KEY }}"
+    TYPESENSE_DATA_DIR: "/typesense_data"
+  restart: unless-stopped

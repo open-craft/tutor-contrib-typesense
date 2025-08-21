@@ -2,12 +2,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: meilisearch
+  name: typesense
 spec:
   type: NodePort
   ports:
-    - port: 7700
+    - port: 8108
       protocol: TCP
-      name: meilisearch
+      name: typesense
   selector:
-    app.kubernetes.io/name: meilisearch
+    app.kubernetes.io/name: typesense

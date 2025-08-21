@@ -1,31 +1,21 @@
 .DEFAULT_GOAL := help
-.PHONY: docs
-SRC_DIRS = ./tutor_meili
-BLACK_OPTS = --exclude templates ${SRC_DIRS}
+.PHONY: test install format lint help
 
-# Warning: These checks are not necessarily run on every PR.
-test: test-lint test-types test-format  # Run some static checks.
+test: lint  ## Run all tests
 
-test-format: ## Run code formatting tests
-	black --check --diff $(BLACK_OPTS)
+install: ## Install python dependencies (it's recommended to activate a virtualenv first)
+	pip install -e .[dev]
+	@which shellcheck > /dev/null || (echo "'shellcheck' is not available. Please manually install shellcheck to run tests." && exit 1)
 
-test-lint: ## Run code linting tests
-	pylint --errors-only --enable=unused-import,unused-argument --ignore=templates --ignore=docs/_ext ${SRC_DIRS}
-
-test-types: ## Run type checks.
-	mypy --exclude=templates --ignore-missing-imports --implicit-reexport --strict ${SRC_DIRS}
+lint: ## Run code linting tests
+	black --check --diff tutor_typesense
+	pylint --errors-only --enable=unused-import,unused-argument --ignore=templates --ignore=docs/_ext tutor_typesense
+	mypy --exclude=templates --ignore-missing-imports --implicit-reexport --strict tutor_typesense
+	shellcheck tutor_typesense/templates/typesense/tasks/typesense/init.sh
 
 format: ## Format code automatically
-	black $(BLACK_OPTS)
-
-isort: ##  Sort imports. This target is not mandatory because the output may be incompatible with black formatting. Provided for convenience purposes.
-	isort --skip=templates ${SRC_DIRS}
-
-changelog-entry: ## Create a new changelog entry.
-	scriv create
-
-changelog: ## Collect changelog entries in the CHANGELOG.md file.
-	scriv collect
+	isort tutor_typesense
+	black tutor_typesense
 
 ESCAPE = 
 help: ## Print this help

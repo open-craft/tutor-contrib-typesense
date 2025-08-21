@@ -1,0 +1,4 @@
+# Typesense
+{{ TYPESENSE_PUBLIC_HOST }}{$default_site_port} {
+    import proxy "typesense:8108"
+}
