@@ -2,13 +2,14 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: meilisearch
+  name: typesense
   labels:
     app.kubernetes.io/component: volume
-    app.kubernetes.io/name: meilisearch
+    app.kubernetes.io/name: typesense
 spec:
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
+      # TODO: make this storage size configurable?
       storage: 5Gi

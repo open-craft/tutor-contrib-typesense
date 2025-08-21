@@ -1,0 +1,4 @@
+typesense-job:
+  # curl is required in the image
+  image: docker.io/alpine/curl
+  depends_on: ["typesense"]

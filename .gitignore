@@ -1,8 +1,2 @@
-.DS_Store
-.*.swp
-!.gitignore
-TODO
 __pycache__
 *.egg-info/
-/build/
-/dist/
