@@ -1,2 +1,2 @@
-recursive-include tutor_meili/patches *
-recursive-include tutor_meili/templates *
+recursive-include tutor_typesense/patches *
+recursive-include tutor_typesense/templates *

@@ -1,0 +1,35 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: typesense
+  labels:
+    app.kubernetes.io/name: typesense
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: typesense
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: typesense
+    spec:
+      containers:
+        - name: typesense
+          image: {{ TYPESENSE_DOCKER_IMAGE }}
+          env:
+            - name: TYPESENSE_API_KEY
+              value: "{{ TYPESENSE_BOOTSTRAP_API_KEY }}"
+            - name: TYPESENSE_DATA_DIR
+              value: /typesense_data
+          ports:
+            - containerPort: 8108
+          volumeMounts:
+            - mountPath: /typesense_data
+              name: data
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: typesense

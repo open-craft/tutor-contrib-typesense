@@ -1,16 +1,13 @@
 [project]
-name = "tutor-meilisearch"
+name = "tutor-typesense"
 dynamic = ["version"]
-description = "A Tutor plugin for search using Meilisearch"
+description = "A Tutor plugin for search using Typesense"
 readme = "README.rst"
 license = { file = "LICENSE.txt" }
-requires-python = ">=3.8"
+requires-python = ">=3.11"
 authors = [
-    { name = "Braden MacDonald", email = "braden@opencraft.com" },
-    { name = "Overhang.IO", email = "contact@overhang.io" },
 ]
 maintainers = [
-    { name = "Braden MacDonald", email = "braden@opencraft.com" },
 ]
 classifiers = [
     "Development Status :: 3 - Alpha",
@@ -25,23 +22,34 @@ classifiers = [
     "Programming Language :: Python :: 3.12",
 ]
 dependencies = [
-    "tutor>=17.0.0,<19.0.0",
+    "tutor>=20.0.0,<21.0.0",  # teak
 ]
 
 [project.optional-dependencies]
 dev = [
-    "tutor[dev]>=17.0.0,<19.0.0",
+    "tutor[dev]>=20.0.0,<21.0.0",  # teak
+    "black",
+    "isort",
+    "pylint",
 ]
 
 [project.entry-points."tutor.plugin.v1"]
-meilisearch = "tutor_meili.plugin"
+typesense = "tutor_typesense.plugin"
 
 [project.urls]
-Code = "https://github.com/open-craft/tutor-contrib-meilisearch"
+Code = "https://github.com/open-craft/tutor-contrib-typesense"
 Community = "https://discuss.openedx.org"
 Documentation = "https://docs.tutor.edly.io/"
 Homepage = "https://docs.tutor.edly.io/"
-"Issue tracker" = "https://github.com/open-craft/tutor-contrib-meilisearch/issues"
+"Issue tracker" = "https://github.com/open-craft/tutor-contrib-typesense/issues"
 
 [tool.setuptools.dynamic]
-version = {attr = "tutor_meili.__about__.__version__"}
+version = {attr = "tutor_typesense.__about__.__version__"}
+
+[tool.isort]
+profile = "black"
+src_paths = ["tutor_typesense"]
+extend_skip = ["templates"]
+
+[tool.black]
+exclude = "templates"

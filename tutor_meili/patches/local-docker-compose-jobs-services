@@ -1,5 +1,0 @@
-meilisearch-job:
-  image: {{ MEILISEARCH_DOCKER_IMAGE }}
-  # Don't actually run meilisearch - we just need curl and sh
-  entrypoint: []
-  depends_on: ["meilisearch"]

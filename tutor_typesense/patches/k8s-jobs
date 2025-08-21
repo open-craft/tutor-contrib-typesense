@@ -1,0 +1,15 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: typesense-job
+  labels:
+    app.kubernetes.io/component: job
+spec:
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: typesense
+          # sh and curl is required in the image
+          image: docker.io/alpine/curl

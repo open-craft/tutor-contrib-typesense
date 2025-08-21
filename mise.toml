@@ -1,0 +1,7 @@
+[env]
+# --seed instructs uv to include pip, setuptools, and wheel in the resulting venv
+# useful for compatibility with other scripts that call pip
+_.python.venv = { path = "venv", create = true, uv_create_args = ['--seed'] }
+
+[tools]
+python = "3.11"
