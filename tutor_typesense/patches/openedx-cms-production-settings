@@ -1,0 +1,2 @@
+TYPESENSE_URL = "http://typesense:8108"
+TYPESENSE_PUBLIC_URL = "https://{{ TYPESENSE_PUBLIC_HOST }}"
