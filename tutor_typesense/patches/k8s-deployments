@@ -24,6 +24,9 @@ spec:
               value: "{{ TYPESENSE_BOOTSTRAP_API_KEY }}"
             - name: TYPESENSE_DATA_DIR
               value: /typesense_data
+            # forum expects up to 1000 per page - https://github.com/openedx/forum/blob/master/forum/constants.py
+            - name: TYPESENSE_MAX_PER_PAGE
+              value: "1000"
           ports:
             - containerPort: 8108
           volumeMounts:
