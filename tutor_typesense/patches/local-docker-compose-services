@@ -6,4 +6,6 @@ typesense:
   environment:
     TYPESENSE_API_KEY: "{{ TYPESENSE_BOOTSTRAP_API_KEY }}"
     TYPESENSE_DATA_DIR: "/typesense_data"
+    # forum expects up to 1000 per page - https://github.com/openedx/forum/blob/master/forum/constants.py
+    TYPESENSE_MAX_PER_PAGE: "1000"
   restart: unless-stopped
