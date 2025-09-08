@@ -77,6 +77,7 @@ This plugin provides the following settings to Open edX components for integrati
 - (common) ``TYPESENSE_ENABLED: bool = True`` - whether the Typesense backend is enabled
 - (common) ``TYPESENSE_COLLECTION_PREFIX: str = "the_configured_collection_prefix"`` - a prefix that the backend should use for all collections (the API key is scoped to this prefix)
 - (common) ``FORUM_SEARCH_BACKEND = "forum.search.typesense.TypesenseBackend"`` - necessary to override Tutor's default forum search backend value pointing to Meilisearch
+- (common) ``SEARCH_ENGINE = "search.typesense.TypesenseEngine"`` - necessary to override Tutor's default courseware search backend value pointing to Meilisearch
 - (cms, lms) ``TYPESENSE_URLS: list[str] = ["http://typesense:8108"]`` - the internal urls for accessing the Typesense API.
 - (cms, lms) ``TYPESENSE_PUBLIC_URL: str = "http://(depends on TYPESENSE_PUBLIC_HOST)"`` - the public url to the Typesense API (for user searches on the frontend)
 - (cms, lms) ``TYPESENSE_API_KEY: str = "the api key"`` - an api key for the Open edX backend to make updates to Typesense collections
