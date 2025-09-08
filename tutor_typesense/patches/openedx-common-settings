@@ -1,3 +1,4 @@
 TYPESENSE_ENABLED = True
 TYPESENSE_COLLECTION_PREFIX = "{{ TYPESENSE_COLLECTION_PREFIX }}"
 FORUM_SEARCH_BACKEND = "forum.search.typesense.TypesenseBackend"
+SEARCH_ENGINE = "search.typesense.TypesenseEngine"
