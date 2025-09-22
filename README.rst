@@ -31,10 +31,86 @@ Configuration
 
 These values can be modified with ``tutor config save --set PARAM_NAME=VALUE`` commands.
 
+Tutor devstack setup guide
+--------------------------
+
+This is a temporary guide to use this with the experimental Typesense search backends developed for Open edX.
+The backends are found at the following pull requests:
+
+- Forum search: https://github.com/openedx/forum/pull/225
+- Courseware (content and course overview) search: https://github.com/openedx/edx-search/pull/222
+
+#. To begin, install `Tutor Main <https://docs.tutor.edly.io/tutorials/main.html#main>`_ or Tutor version 20 (Teak), prepare a directory for the new devstack, and cd to it.
+
+#. Enable the Typesense Tutor plugin::
+
+    git clone https://github.com/open-craft/tutor-contrib-typesense
+    pip install -e ./tutor-contrib-typesense
+    tutor plugins enable typesense
+
+#. Enable the forum and mount the custom branch of forum::
+
+    tutor plugins enable forum
+    git clone https://github.com/open-craft/forum.git
+    git -C ./forum checkout samuel/typesense-backend
+    tutor mounts add ./forum
+
+#. Mount the custom branch of edx-search::
+
+    git clone https://github.com/open-craft/edx-search.git
+    git -C ./edx-search checkout typesense
+    tutor mounts add ./edx-search
+
+#. (optional) Here you can edit Tutor's config.yml to configure anything as desired (see Configuration section above).
+
+#. Launch the devstack::
+
+    tutor images build openedx-dev
+    tutor dev launch
+
+#. Initialise the courseware indexes (forum is initialised automatically)::
+
+    tutor dev exec lms ./manage.py lms shell -c "import search.typesense; search.typesense.create_indexes()"
+
+#. Continue with normal set up - eg. create a user, import a course::
+
+    tutor dev do createuser --staff --superuser admin admin@example.com --password password
+    tutor dev do importdemocourse
+
+#. Finally, to enable course content search on the frontend, create and enable a waffle flag named ``courseware.mfe_courseware_search``. You can do this from the LMS Django admin page, waffle flags section (http://local.openedx.io:8000/admin/waffle/flag/).
+
+Reindexing
+^^^^^^^^^^
+
+If you need to reset the indexes and reindex content:
+
+.. code-block:: bash
+
+    # forum
+    tutor dev exec lms -- python manage.py lms rebuild_forum_indices
+
+    # edx-search (courseware search)
+    tutor dev exec lms ./manage.py lms shell -c "import search.typesense; search.typesense.delete_indexes(); search.typesense.create_indexes()"
+    tutor dev exec cms ./manage.py cms reindex_course --active
+
+Web Dashboard
+-------------
+
+Typesense doesn't come with an official web dashboard,
+but there is a community dashboard developed at https://github.com/bfritscher/typesense-dashboard.
+You can visit it directly on the web without installing at https://bfritscher.github.io/typesense-dashboard/.
+To connect to the Typesense server running here, visit the web dashboard url, and enter the following details at the login screen:
+
+- Api Key: (copy the ``TYPESENSE_API_KEY`` found in the Tutor ``config.yml`` file)
+- protocol: ``http``
+- host: ``localhost``
+- port: ``8108``
+- path: (leave blank)
+
 Limitations
 -----------
 
-It's not recommended to run high availability (clustered) Typesense on Kubernetes. See `typesense/typesense#465 <https://github.com/typesense/typesense/issues/465>` and `typesense/typesense#2049 <https://github.com/typesense/typesense/issues/2049>` for more information.
+It's not recommended to run high availability (clustered) Typesense on Kubernetes. See `typesense/typesense#465 <https://github.com/typesense/typesense/issues/465>`_ and `typesense/typesense#2049 <https://github.com/typesense/typesense/issues/2049>`_ for more information.
 
 This plugin does not support deploying a clustered Typesense server.
 
@@ -59,14 +135,14 @@ TBD
 Development
 -----------
 
-Set up a python virtual environment, then you can install dependencies and run the tests like:
+Set up a python virtual environment, then you can install dependencies and run the tests like::
 
-  make install
-  make test
+    make install
+    make test
 
-After making some changes, you can run the auto formatter over the code for consistency:
+After making some changes, you can run the auto formatter over the code for consistency::
 
-  make format
+    make format
 
 
 Open edX integration
