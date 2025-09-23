@@ -66,11 +66,22 @@ The backends are found at the following pull requests:
 #. Launch the devstack::
 
     tutor images build openedx-dev
+
+    # if launching for the first time:
     tutor dev launch
+    # otherwise you can launch in non-interactive mode:
+    tutor dev launch -I
 
 #. Initialise the courseware indexes (forum is initialised automatically)::
 
     tutor dev exec lms ./manage.py lms shell -c "import search.typesense; search.typesense.create_indexes()"
+
+#. (optional) If you already have data that needs to be indexed on the forum or courses, you can trigger a full index now::
+
+    # forum
+    tutor dev exec lms -- python manage.py lms rebuild_forum_indices
+    # edx-search (course list search & course content search)
+    tutor dev exec cms ./manage.py cms reindex_course --active
 
 #. Continue with normal set up - eg. create a user, import a course::
 
@@ -89,7 +100,7 @@ If you need to reset the indexes and reindex content:
     # forum
     tutor dev exec lms -- python manage.py lms rebuild_forum_indices
 
-    # edx-search (courseware search)
+    # edx-search (course list search & course content search)
     tutor dev exec lms ./manage.py lms shell -c "import search.typesense; search.typesense.delete_indexes(); search.typesense.create_indexes()"
     tutor dev exec cms ./manage.py cms reindex_course --active
 
@@ -101,7 +112,7 @@ but there is a community dashboard developed at https://github.com/bfritscher/ty
 You can visit it directly on the web without installing at https://bfritscher.github.io/typesense-dashboard/.
 To connect to the Typesense server running here, visit the web dashboard url, and enter the following details at the login screen:
 
-- Api Key: (copy the ``TYPESENSE_API_KEY`` found in the Tutor ``config.yml`` file)
+- Api Key: (use the output from running ``tutor config printvalue TYPESENSE_API_KEY``)
 - protocol: ``http``
 - host: ``localhost``
 - port: ``8108``
