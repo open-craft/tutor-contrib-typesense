@@ -21,6 +21,7 @@ hooks.Filters.CONFIG_DEFAULTS.add_items(
         ("TYPESENSE_COLLECTION_PREFIX", "tutor_"),
         ("TYPESENSE_PUBLIC_HOST", "typesense.{{ LMS_HOST }}"),
         ("TYPESENSE_DOCKER_IMAGE", "docker.io/typesense/typesense:29.0"),
+        ("TYPESENSE_VOLUME_SIZE", "5Gi"),
     ]
 )
 
