@@ -11,5 +11,4 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      # TODO: make this storage size configurable?
-      storage: 5Gi
+      storage: "{{ TYPESENSE_VOLUME_SIZE }}"

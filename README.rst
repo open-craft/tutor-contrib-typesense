@@ -28,6 +28,7 @@ Configuration
 - ``TYPESENSE_DOCKER_IMAGE`` (default: ``"docker.io/typesense/typesense:29.0"``)
 - ``TYPESENSE_BOOTSTRAP_API_KEY`` The initial admin API key to use when bootstrapping the Typesense server and to generate an api key for Open edX (default: auto-generated).
 - ``TYPESENSE_API_KEY`` The API key used by Open edX (default: auto-generated).
+- ``TYPESENSE_VOLUME_SIZE`` The volume size for Typesense data in k8s deployments. See `k8s memory resource units <https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#meaning-of-memory>`_ for available units. (default: ``"5Gi"``)
 
 These values can be modified with ``tutor config save --set PARAM_NAME=VALUE`` commands.
 
