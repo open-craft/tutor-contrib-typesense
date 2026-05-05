@@ -1,7 +1,7 @@
 Typesense for Open edX (Tutor Plugin)
 =======================================
 
-This is a plugin for `Tutor <https://docs.tutor.edly.io>`_ 20 (Open edX "Teak" release) that provides Typesense to the platform, so it can be used as a search engine to power content search.
+This is a plugin for `Tutor <https://docs.tutor.edly.io>`_ 20+ (Open edX "Teak" release or newer) that provides Typesense to the platform, so it can be used as a search engine to power content search.
 
 Installation
 ------------
@@ -41,26 +41,13 @@ The backends are found at the following pull requests:
 - Forum search: https://github.com/openedx/forum/pull/225
 - Courseware (content and course overview) search: https://github.com/openedx/edx-search/pull/222
 
-#. To begin, install `Tutor Main <https://docs.tutor.edly.io/tutorials/main.html#main>`_ or Tutor version 20 (Teak), prepare a directory for the new devstack, and cd to it.
+#. To begin, install `Tutor Main <https://docs.tutor.edly.io/tutorials/main.html#main>`_ or Tutor version 20+, prepare a directory for the new devstack, and cd to it.
 
 #. Enable the Typesense Tutor plugin::
 
     git clone https://github.com/open-craft/tutor-contrib-typesense
     pip install -e ./tutor-contrib-typesense
     tutor plugins enable typesense
-
-#. Enable the forum and mount the custom branch of forum::
-
-    tutor plugins enable forum
-    git clone https://github.com/open-craft/forum.git
-    git -C ./forum checkout samuel/typesense-backend
-    tutor mounts add ./forum
-
-#. Mount the custom branch of edx-search::
-
-    git clone https://github.com/open-craft/edx-search.git
-    git -C ./edx-search checkout typesense
-    tutor mounts add ./edx-search
 
 #. (optional) Here you can edit Tutor's config.yml to configure anything as desired (see Configuration section above).
 
