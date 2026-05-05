@@ -22,12 +22,12 @@ classifiers = [
     "Programming Language :: Python :: 3.12",
 ]
 dependencies = [
-    "tutor>=20.0.0,<21.0.0",  # teak
+    "tutor>=20.0.0,<23.0.0",  # teak (20) - Verawood (22)
 ]
 
 [project.optional-dependencies]
 dev = [
-    "tutor[dev]>=20.0.0,<21.0.0",  # teak
+    "tutor[dev]>=20.0.0,<23.0.0",  # teak (20) - Verawood (22)
     "black",
     "isort",
     "pylint",
